@@ -1,0 +1,37 @@
+services:
+  chhoto-url:
+    build:
+      context: ./chhoto-url
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: chhoto-url
+    ports:
+      - 4567:4567
+    environment:
+      - db_url=/db/urls.sqlite
+      - site_url=https://5n.be
+      - password=${CHHOTO_URL_PASSWORD}
+      - api_key=${CHHOTO_URL_API_KEY}
+      - redirect_method=TEMPORARY
+      - slug_style=UID
+      - slug_length=4
+      - public_mode=Enable
+    volumes:
+      - chhoto_db:/db
+
+  privatebin:
+    build:
+      context: ./privatebin-docker
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8080"
+    environment:
+      - CHHOTO_API_URL=http://chhoto-url:4567
+      - CHHOTO_API_KEY=${CHHOTO_URL_API_KEY}
+    restart: unless-stopped
+    volumes:
+      - privatebin_data:/srv/data
+
+volumes:
+  chhoto_db:
+  privatebin_data:

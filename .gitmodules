@@ -1,0 +1,6 @@
+[submodule "chhoto-url"]
+	path = chhoto-url
+	url = https://github.com/zehuanli-contextual/chhoto-url
+[submodule "privatebin-docker"]
+	path = privatebin-docker
+	url = https://github.com/zehuanli-contextual/docker-nginx-fpm-alpine
